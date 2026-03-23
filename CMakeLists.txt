@@ -8,6 +8,8 @@ project(leveldb VERSION 1.23.0 LANGUAGES C CXX)
 
 # setup compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# setup default mode: debug
+set(CMAKE_BUILD_TYPE Debug)
 
 # C standard can be overridden when this is used as a sub-project.
 if(NOT CMAKE_C_STANDARD)
