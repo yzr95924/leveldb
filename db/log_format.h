@@ -15,12 +15,12 @@ enum RecordType {
   // Zero is reserved for preallocated files
   kZeroType = 0,
 
-  kFullType = 1,
+  kFullType = 1,  // Zuoru: record在当前block上是完整的
 
   // For fragments
-  kFirstType = 2,
-  kMiddleType = 3,
-  kLastType = 4
+  kFirstType = 2,   // Zuoru: record的前半部分在当前block
+  kMiddleType = 3,  // Zuoru: record的中间部分在当前block
+  kLastType = 4     // Zuoru: record的后半部分在当前block
 };
 static const int kMaxRecordType = kLastType;
 
