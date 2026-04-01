@@ -33,6 +33,7 @@
 
 #include "leveldb/comparator.h"
 #include "leveldb/options.h"
+
 #include "util/coding.h"
 
 namespace leveldb {
@@ -75,6 +76,7 @@ void BlockBuilder::Add(const Slice& key, const Slice& value) {
   assert(buffer_.empty()  // No values yet?
          || options_->comparator->Compare(key, last_key_piece) > 0);
   size_t shared = 0;
+  // Zuoru: 设置restart point默认是16
   if (counter_ < options_->block_restart_interval) {
     // See how much sharing to do with previous string
     const size_t min_length = std::min(last_key_piece.size(), key.size());
@@ -100,6 +102,7 @@ void BlockBuilder::Add(const Slice& key, const Slice& value) {
   // Update state
   last_key_.resize(shared);
   last_key_.append(key.data() + shared, non_shared);
+  // Zuoru: 确保last_key_记录了当前的key
   assert(Slice(last_key_) == key);
   counter_++;
 }

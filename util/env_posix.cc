@@ -8,11 +8,6 @@
 #ifndef __Fuchsia__
 #include <sys/resource.h>
 #endif
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <atomic>
 #include <cerrno>
 #include <cstddef>
@@ -24,13 +19,18 @@
 #include <queue>
 #include <set>
 #include <string>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
 #include <thread>
 #include <type_traits>
+#include <unistd.h>
 #include <utility>
 
 #include "leveldb/env.h"
 #include "leveldb/slice.h"
 #include "leveldb/status.h"
+
 #include "port/port.h"
 #include "port/thread_annotations.h"
 #include "util/env_posix_test_helper.h"
@@ -56,7 +56,8 @@ constexpr const int kOpenBaseFlags = O_CLOEXEC;
 constexpr const int kOpenBaseFlags = 0;
 #endif  // defined(HAVE_O_CLOEXEC)
 
-constexpr const size_t kWritableFileBufferSize = 65536;
+constexpr const size_t kWritableFileBufferSize =
+    65536;  // Zuoru: 控制writableFile写入数据量大小为64KiB
 
 Status PosixError(const std::string& context, int error_number) {
   if (error_number == ENOENT) {
